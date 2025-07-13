@@ -1,7 +1,7 @@
 package com.LavaCandy.Personal.Task.Manager.controler;
 
-import com.LavaCandy.Personal.Task.Manager.model.User;
-import com.LavaCandy.Personal.Task.Manager.service.UserService;
+import com.LavaCandy.Personal.Task.Manager.model.*;
+import com.LavaCandy.Personal.Task.Manager.service.*;
 
 import java.util.List;
 
@@ -16,6 +16,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private BoardService boardService;
+
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -47,6 +50,17 @@ public class UserController {
         User updatedUser = userService.updateUser(id, user);
         if(updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/boards")
+    public ResponseEntity<List<Board>> getUserBoards(@PathVariable Long id) {
+        User currUser = userService.getUserById(id);
+
+        if(currUser != null){
+            return ResponseEntity.ok(boardService.getBoardsByOwner(id));
         } else {
             return ResponseEntity.notFound().build();
         }
