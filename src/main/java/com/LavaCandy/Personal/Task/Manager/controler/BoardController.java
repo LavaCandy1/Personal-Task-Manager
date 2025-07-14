@@ -22,8 +22,8 @@ public class BoardController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Board> createBoard(@RequestBody Board board,@PathVariable Long userID){
-        Board createdBoard = boardService.createBoard(board, userID);
+    public ResponseEntity<Board> createBoard(@RequestBody Board board,@PathVariable Long userId){
+        Board createdBoard = boardService.createBoard(board, userId);
         if(createdBoard != null){
             return ResponseEntity.ok(createdBoard);
         } else {
