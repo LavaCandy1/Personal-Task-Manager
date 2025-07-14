@@ -3,6 +3,7 @@ package com.LavaCandy.Personal.Task.Manager.controler;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,8 @@ public class BoardController {
     
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private TaskService taskService;
 
     @GetMapping
     public ResponseEntity<List<Board>> getAllBoards(){
@@ -36,6 +39,18 @@ public class BoardController {
         Board deletedBoard = boardService.deleteBoard(id); 
         if(deletedBoard != null) {
             return ResponseEntity.ok(deletedBoard);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/tasks")
+    public ResponseEntity<List<Task>> getTaskByBoard(@PathVariable Long id){
+
+        List<Task> allTasks = taskService.getTaskByBoardId(id);
+
+        if(allTasks != null){
+            return ResponseEntity.ok(allTasks);
         } else {
             return ResponseEntity.notFound().build();
         }

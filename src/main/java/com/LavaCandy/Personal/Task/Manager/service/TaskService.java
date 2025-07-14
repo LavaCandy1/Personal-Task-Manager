@@ -3,8 +3,8 @@ package com.LavaCandy.Personal.Task.Manager.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.LavaCandy.Personal.Task.Manager.repository.TaskRepository;
-import com.LavaCandy.Personal.Task.Manager.model.Task;
+import com.LavaCandy.Personal.Task.Manager.repository.*;
+import com.LavaCandy.Personal.Task.Manager.model.*;
 
 import java.util.Optional;
 import java.util.List;
@@ -14,6 +14,8 @@ public class TaskService {
     
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private BoardRepository boardRepository;
 
     public Task createTask(Task task){
         return taskRepository.save(task);
@@ -47,4 +49,15 @@ public class TaskService {
             return null;
         }
     }
+
+    public List<Task> getTaskByBoardId(Long boardId) {
+        Board currBoard = boardRepository.findById(boardId).orElse(null);
+
+        if(currBoard != null) {
+            return taskRepository.findByBoard(currBoard);
+        } else {
+            return null;
+        }
+    }
+    
 }
