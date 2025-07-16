@@ -1,5 +1,7 @@
 package com.LavaCandy.Personal.Task.Manager.controler;
 
+import com.LavaCandy.Personal.Task.Manager.dto.UserRequestDTO;
+import com.LavaCandy.Personal.Task.Manager.dto.UserResponseDTO;
 import com.LavaCandy.Personal.Task.Manager.model.*;
 import com.LavaCandy.Personal.Task.Manager.service.*;
 
@@ -21,20 +23,20 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.creatUser(user));
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO user) {
+        return ResponseEntity.ok(userService.createUser(user));
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUser());
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id ) {
-        User user = userService.getUserById(id);
-        if(user != null) {
-            return ResponseEntity.ok(user);
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id ) {
+        UserResponseDTO userResponseDTO = userService.getUserById(id);
+        if(userResponseDTO != null) {
+            return ResponseEntity.ok(userResponseDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -46,10 +48,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        User updatedUser = userService.updateUser(id, user);
-        if(updatedUser != null) {
-            return ResponseEntity.ok(updatedUser);
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO userResponseDTO = userService.updateUser(id, userRequestDTO);
+        if(userResponseDTO != null) {
+            return ResponseEntity.ok(userResponseDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -57,9 +59,9 @@ public class UserController {
 
     @GetMapping("/{id}/boards")
     public ResponseEntity<List<Board>> getUserBoards(@PathVariable Long id) {
-        User currUser = userService.getUserById(id);
+        UserResponseDTO currUserResponseDTO = userService.getUserById(id);
 
-        if(currUser != null){
+        if(currUserResponseDTO != null){
             return ResponseEntity.ok(boardService.getBoardsByOwner(id));
         } else {
             return ResponseEntity.notFound().build();
