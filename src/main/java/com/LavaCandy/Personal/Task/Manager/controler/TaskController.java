@@ -30,15 +30,15 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
-    @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task){
-        Task createdTask = taskService.createTask(task);
-        if (createdTask != null) {
-            return ResponseEntity.ok(createdTask);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+    // @PostMapping
+    // public ResponseEntity<Task> createTask(@RequestBody Task task){
+    //     Task createdTask = taskService.createTask(task);
+    //     if (createdTask != null) {
+    //         return ResponseEntity.ok(createdTask);
+    //     } else {
+    //         return ResponseEntity.badRequest().build();
+    //     }
+    // }
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskByID(@PathVariable Long id){
@@ -50,7 +50,7 @@ public class TaskController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task){
         Task updatedTask = taskService.updateTask(id, task);
 
@@ -64,6 +64,17 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
+    }
+    
+    @PutMapping("/{id}/toggle")
+    public ResponseEntity<Task> toggleTaskCompletion(@PathVariable Long id){
+        Task toggledTask = taskService.toggleTaskCompletion(id);
+
+        if(toggledTask != null){
+            return ResponseEntity.ok(toggledTask);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     
 }

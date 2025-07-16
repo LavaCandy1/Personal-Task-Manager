@@ -20,7 +20,15 @@ public class TaskService {
     public Task createTask(Task task){
         return taskRepository.save(task);
     }
-
+    
+    public Task createTask(Task task, Board board) {
+        if (board != null) {
+            task.setBoard(board);
+            return taskRepository.save(task);
+        }
+        return null;
+    }
+    
     public List<Task> getAllTasks(){
         return taskRepository.findAll();
     }
@@ -60,4 +68,16 @@ public class TaskService {
         }
     }
     
+    public Task toggleTaskCompletion(Long taskId){
+        Task currtask = taskRepository.findById(taskId).orElse(null);
+        
+        if(currtask != null){
+            currtask.setCompletion(!currtask.getCompletion());
+            return taskRepository.save(currtask);
+        }else{
+            return null;
+        }
+        
+    }
+
 }

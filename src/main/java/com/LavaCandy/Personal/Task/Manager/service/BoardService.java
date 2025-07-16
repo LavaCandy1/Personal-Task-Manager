@@ -48,4 +48,8 @@ public class BoardService {
         }
         return null;
     }
+
+    public Board getBoardById(Long boardId){
+        return boardRepository.findById(boardId).orElse(null);        
+    }
 }
