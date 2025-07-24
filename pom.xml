@@ -50,6 +50,14 @@
 			<!-- <version>3.5.3</version> -->
 		</dependency>
 
+		<!-- sping security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>3.5.3</version>
+		</dependency>
+
+		<!-- h2 database -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

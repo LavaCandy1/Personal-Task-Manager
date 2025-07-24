@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // You can add custom query methods if needed, such as finding users by email or name.
     // You can add custom queries here later, like findByEmail()
     // this gives us methods like save(), findAll(), findById(), deleteById() etc.
+
+    User findByEmail(String email);
 }
