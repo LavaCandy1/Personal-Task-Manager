@@ -16,7 +16,7 @@ public class User {
     private String email;
     private String password;
     
-    @OneToMany
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards;
 
     // Getters
@@ -59,5 +59,15 @@ public class User {
 
     public void setBoards(List<Board> boards) {
         this.boards = boards;
+    }
+
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", boards=" + boards +
+                '}';
     }
 }

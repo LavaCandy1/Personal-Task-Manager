@@ -1,5 +1,8 @@
 package com.LavaCandy.Personal.Task.Manager.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 
@@ -14,6 +17,9 @@ public class Board {
 
     @ManyToOne
     private User owner;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -32,6 +38,13 @@ public class Board {
     }
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
     
     

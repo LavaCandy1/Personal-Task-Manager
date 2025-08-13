@@ -38,4 +38,11 @@ public class UserRequestDTO {
         return password;
     }
     
+    public String toString() {
+        return "UserRequestDTO{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

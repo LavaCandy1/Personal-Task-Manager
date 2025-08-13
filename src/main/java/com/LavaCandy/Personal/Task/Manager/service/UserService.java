@@ -6,6 +6,10 @@ import com.LavaCandy.Personal.Task.Manager.dto.UserRequestDTO;
 import com.LavaCandy.Personal.Task.Manager.dto.UserResponseDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,16 +20,22 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JWTService jwtService;
     
-    // public User creatUser(User user) {
-    //     return userRepository.save(user);
-    // }
+
+    
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setEmail(userRequestDTO.getEmail());
-        user.setPassword(userRequestDTO.getPassword());
+        user.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
         User savedUser = userRepository.save(user);
               
         return new UserResponseDTO(savedUser);
@@ -63,6 +73,18 @@ public class UserService {
             return new UserResponseDTO(updatedUser2);
         }
         return null;
+    }
+
+    public String verifyUser(UserRequestDTO userRequestDTO) {
+
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(userRequestDTO.getEmail(), userRequestDTO.getPassword())
+        );
+
+        if(authentication.isAuthenticated()) {
+            return jwtService.generateToken(userRequestDTO.getEmail());
+        }
+        return "Authentication failed";
     }
     
 }
