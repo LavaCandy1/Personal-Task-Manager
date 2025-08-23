@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -17,6 +19,7 @@ public class User {
     private String password;
     
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Board> boards;
 
     // Getters

@@ -1,5 +1,7 @@
 package com.LavaCandy.Personal.Task.Manager.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 
@@ -17,6 +19,7 @@ public class Task {
     private String dueDate;
     
     @ManyToOne
+    @JsonBackReference
     private Board board;
 
     //getters

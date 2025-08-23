@@ -3,6 +3,9 @@ package com.LavaCandy.Personal.Task.Manager.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 
@@ -16,9 +19,11 @@ public class Board {
     private String name;
 
     @ManyToOne
+    @JsonBackReference
     private User owner;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Task> tasks = new ArrayList<>();
 
     public Long getId() {
