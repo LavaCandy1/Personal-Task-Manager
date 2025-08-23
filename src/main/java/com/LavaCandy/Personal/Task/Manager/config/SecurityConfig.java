@@ -40,7 +40,7 @@ public class SecurityConfig {
             .headers(headers -> headers.frameOptions().disable()) // Allow H2 console to be displayed in a frame
             .formLogin(Customizer.withDefaults())
             .httpBasic(Customizer.withDefaults())
-            // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
