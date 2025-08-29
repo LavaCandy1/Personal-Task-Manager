@@ -34,10 +34,10 @@ public class SecurityConfig {
         return http
             .csrf(customizer -> customizer.disable())
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/h2-console/**", "/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Allow H2 console without auth
+                .requestMatchers("/h2-console/**", "/auth/**", "/v3/api-docs/**", "/swagger-ui/**","/").permitAll()
                 .anyRequest().authenticated()
             )
-            .headers(headers -> headers.frameOptions().disable()) // Allow H2 console to be displayed in a frame
+            .headers(headers -> headers.frameOptions().disable())
             .formLogin(Customizer.withDefaults())
             .httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
