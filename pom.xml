@@ -148,7 +148,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <finalName>Personal-Task-Manager</finalName>
     </build>
 
-	<finalName>Personal-Task-Manager</finalName>
 </project>
