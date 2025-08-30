@@ -150,4 +150,5 @@
         </plugins>
     </build>
 
+	<finalName>Personal-Task-Manager</finalName>
 </project>
